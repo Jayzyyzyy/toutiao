@@ -1,0 +1,59 @@
+<html>
+
+<body>
+
+<pre>  #*预格式化的文本*#
+
+    Hello VM.
+
+    ## 你看不到我
+
+    #*
+    这里都看不到
+    *#
+
+    value1:$!{value1}
+
+    $!{value2}  ##$!(var)：如果有值则输出，如果为空，则不显示；
+    ${value3}   ##${var}：如果有值则输出，如果为空，则将该代码原样输出；
+
+    #foreach($color in $colors)
+        Color $!{foreach.index}:$!{foreach.count}: $!{color}
+    #end
+
+    #foreach($key in $map.keySet())
+        Number $!{foreach.index}:$!{foreach.count}: $!{key}--$!{map.get($!{key})}
+    #end
+
+    #foreach($kv in $map.entrySet())
+        Number $!{foreach.index}:$!{foreach.count}: $!{kv.key}--$!{kv.value}
+    #end
+
+    User: $!{user.name}
+    User: $!{user.getName()}
+
+    #set($title = "nowCoder")
+    Include: #include("header.vm")  <br />
+    Parse: #parse("header.vm")
+
+    #macro(render_color,$color,$index)
+        Color by Macro $index, $color.
+    #end
+
+    #foreach($color in $colors)
+        #render_color($color, $foreach.index)
+    #end
+
+    #set($hello = "hello")
+    #set($hworld1 = "$!{hello} world1")
+    #set($hworld2 = "$!{hello} world2")
+
+    hworld1:$hworld1
+    hworld2:$hworld2
+
+    $!{colors.size()}
+</pre>
+
+</body>
+
+</html>
