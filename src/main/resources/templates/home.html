@@ -11,11 +11,6 @@
 
     <link rel="stylesheet" media="all" href="/styles/style.css">
 
-    <script src="/scripts/hm.js"></script>
-    <script src="/scripts/detail.js"></script>
-
-    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.qrcode.min.js"></script>
 </head>
 <body class="welcome_index">
 
@@ -40,8 +35,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class=""><a href="http://nowcoder.com/explore">发现</a></li>
 
-                    <li><a href="http://nowcoder.com/signin">站内信</a></li>
-                    <li class=""><a href="http://nowcoder.com/about">登陆</a></li>
+                    #if ($user)
+                    <li class="js-login"><a href="javascript:void(0);">$!{user.name}</a></li>
+                    #else
+                    <li class="js-login"><a href="javascript:void(0);">登陆</a></li>
+                    #end
                 </ul>
 
             </nav>
@@ -90,7 +88,7 @@
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object app-qrcode" src="../images/res/qrcode.png" alt="App qrcode web index">
+                                    <img class="media-object app-qrcode" src="/images/res/qrcode.png" alt="App qrcode web index">
                                 </div>
                                 <div class="media-body">
                                     <div class="buttons">
@@ -112,18 +110,18 @@
 
                     #set($cur_date = '')
                     #foreach($vo in $vos)
-                        #if ($cur_date != $date.format('yyyy-MM-dd', $vo.news.createdDate))
-                            #if ($foreach.index > 0)
-                                </div> ## 上一个要收尾
-                            #end
-                            #set($cur_date = $date.format('yyyy-MM-dd', $vo.news.createdDate))
-                            <h3 class="date">
-                                <i class="fa icon-calendar"></i>
-                                <span>头条资讯 &nbsp; $date.format('yyyy-MM-dd', $vo.news.createdDate)</span>
-                            </h3>
-
-                        <div class="posts">
+                    #if ($cur_date != $date.format('yyyy-MM-dd', $vo.news.createdDate))
+                        #if ($foreach.index > 0)
+                            </div> ## 上一个要收尾
                         #end
+                        #set($cur_date = $date.format('yyyy-MM-dd', $vo.news.createdDate))
+                    <h3 class="date">
+                        <i class="fa icon-calendar"></i>
+                        <span>头条资讯 &nbsp; $date.format('yyyy-MM-dd', $vo.news.createdDate)</span>
+                    </h3>
+
+                    <div class="posts">
+                    #end
                         <div class="post">
                             <div class="votebar">
                                 <button class="click-like up" aria-pressed="false" title="赞同"><i class="vote-arrow"></i><span class="count">$!{vo.news.likeCount}</span></button>
@@ -136,7 +134,7 @@
                                 </div>
                                 <div class="content-main">
                                     <h3 class="title">
-                                        <a target="_blank" rel="external nofollow" href="$!{vo.news.link}">$!{vo.news.title}<!--  $date.format("yyy-MM-dd",$!{vo.news.createdDate})--></a>
+                                        <a target="_blank" rel="external nofollow" href="$!{vo.news.link}">$!{vo.news.title}</a>
                                     </h3>
                                     <div class="meta">
                                         $!{vo.news.link}
@@ -171,9 +169,9 @@
                           《头条八卦》，每日 Top 3 通过邮件发送给你。      <a class="btn btn-info btn-sm pull-right" href="http://nowcoder.com/account/settings">立即订阅</a>
                         </div>
                         -->
-                        #if ($foreach.count == $vos.size()) ##最后有个元素要收尾
-                        </div>
-                        #end
+                    #if ($foreach.count == $vos.size()) ##最后有个元素要收尾
+                    </div>
+                    #end
 
                     #end
 
@@ -223,9 +221,16 @@
     </div>
   </div>
 
-  <script>
-  </script>
+
+    <script>window.loginpop = $!{pop};</script>
+    <script type="text/javascript" src="/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/scripts/main/base/base.js"></script>
+    <script type="text/javascript" src="/scripts/main/base/util.js"></script>
+    <script type="text/javascript" src="/scripts/main/base/event.js"></script>
+    <script type="text/javascript" src="/scripts/main/component/component.js"></script>
+    <script type="text/javascript" src="/scripts/main/component/popup.js"></script>
+    <script type="text/javascript" src="/scripts/main/component/popupLogin.js"></script>
+    <script type="text/javascript" src="/scripts/main/site/home.js"></script>
 
 
-</body>
-</html>
+</body></html>
