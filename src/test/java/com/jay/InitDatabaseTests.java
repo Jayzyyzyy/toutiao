@@ -1,7 +1,9 @@
 package com.jay;
 
+import com.jay.dao.LoginTicketDAO;
 import com.jay.dao.NewsDAO;
 import com.jay.dao.UserDAO;
+import com.jay.model.LoginTicket;
 import com.jay.model.News;
 import com.jay.model.User;
 import org.junit.Assert;
@@ -25,6 +27,9 @@ public class InitDatabaseTests {
 
 	@Autowired
 	NewsDAO newsDAO;
+
+	@Autowired
+	LoginTicketDAO loginTicketDAO;
 
 	@Test
 	public void initData() {
@@ -55,13 +60,23 @@ public class InitDatabaseTests {
 			news.setLink(String.format("http://www.nowcoder.com/%d.html", i));
 			newsDAO.addNews(news);
 
+			LoginTicket ticket = new LoginTicket();
+			ticket.setStatus(0);
+			ticket.setUserId(i+1);
+			ticket.setExpired(date);
+			ticket.setTicket(String.format("TICKET%d", i+1));
+			loginTicketDAO.addTicket(ticket);
+
+			loginTicketDAO.updateStatus(ticket.getTicket(), 2);
+
 		}
 		Assert.assertEquals("newpassword", userDAO.selectById(1).getPassword());  //查
 
 		userDAO.deleteById(1);  //删
 		Assert.assertNull(userDAO.selectById(1));  //判断是否为空
 
-
+		Assert.assertEquals(1, loginTicketDAO.selectByTicket("TICKET1").getUserId());  //id
+		Assert.assertEquals(2, loginTicketDAO.selectByTicket("TICKET1").getStatus());  //status
 
 	}
 

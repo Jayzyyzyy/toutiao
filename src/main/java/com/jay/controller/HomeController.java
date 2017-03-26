@@ -4,6 +4,8 @@ import com.jay.dao.NewsDAO;
 import com.jay.dao.UserDAO;
 import com.jay.model.News;
 import com.jay.model.ViewObject;
+import com.jay.service.NewsService;
+import com.jay.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,19 +22,19 @@ import java.util.List;
 @Controller
 public class HomeController {
     @Autowired
-    UserDAO userDAO;
+    UserService userService;
 
     @Autowired
-    NewsDAO newsDAO;
+    NewsService newsService;
 
     private List<ViewObject> getNews(int userId, int offset, int limit){
-        List<News> newsList = newsDAO.selectByUserIdAndOffset(userId, offset, limit);
+        List<News> newsList = newsService.getLatestNews(userId, offset, limit);
 
         List<ViewObject> vos = new ArrayList<ViewObject>();
         for (News news : newsList) {
             ViewObject vo = new ViewObject();
             vo.set("news", news);
-            vo.set("user", userDAO.selectById(news.getUserId()));
+            vo.set("user", userService.getUser(news.getUserId()));
             vos.add(vo);
         }
         return vos;
