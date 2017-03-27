@@ -2,14 +2,11 @@ package com.jay.model;
 
 import java.util.Date;
 
-/**
- * Created by nowcoder on 2016/7/7.
- */
 public class Comment {
     private int id;
     private int userId;
-    private int entityId;
-    private int entityType;
+    private int entityId; //实体id
+    private int entityType; //实体类型
     private String content;
     private Date createdDate;
     private int status;

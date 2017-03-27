@@ -2,6 +2,7 @@ package com.jay.service;
 
 import com.jay.dao.LoginTicketDAO;
 import com.jay.dao.UserDAO;
+import com.jay.model.HostHolder;
 import com.jay.model.LoginTicket;
 import com.jay.model.User;
 import com.jay.util.ToutiaoUtils;
@@ -22,6 +23,9 @@ public class UserService {
 
     @Autowired
     private LoginTicketDAO loginTicketDAO;
+
+    @Autowired
+    private HostHolder hostHolder;
 
     public User getUser(int id){
         return userDAO.selectById(id);
@@ -94,6 +98,9 @@ public class UserService {
         LoginTicket ticket = loginTicketDAO.selectByUserId(userId);
         if(ticket != null){
             String t = ticket.getTicket();
+            Date date = new Date();
+            date.setTime(date.getTime() + 3600*24*1000);
+            loginTicketDAO.updateExpired(t, date);
             loginTicketDAO.updateStatus(t, 0);
             return t;
         }

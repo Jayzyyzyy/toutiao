@@ -1,7 +1,7 @@
 package com.jay.service;
 
-import com.nowcoder.dao.CommentDAO;
-import com.nowcoder.model.Comment;
+import com.jay.dao.CommentDAO;
+import com.jay.model.Comment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by nowcoder on 2016/7/7.
+ *
  */
 @Service
 public class CommentService {
-    private static final Logger logger = LoggerFactory.getLogger(QiniuService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
 
     @Autowired
     CommentDAO commentDAO;

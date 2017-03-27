@@ -8,18 +8,19 @@ import java.security.MessageDigest;
 import java.util.Map;
 
 /**
- * Created by Jay on 2017/3/25.
+ *  工具类
  */
 public class ToutiaoUtils {
     private static final Logger logger = LoggerFactory.getLogger(ToutiaoUtils.class);
 
     public static String TOUTIAO_DOMAIN = "http://127.0.0.1:8080/";
     public static String IMAGE_DIR = "D:/upload/";
-    public static String[] IMAGE_FILE_EXTD = new String[] {"png", "bmp", "jpg", "jpeg"};
+    public static String[] IMAGE_FILE_EXTD = new String[] {"png", "bmp", "jpg", "jpeg"}; //扩展名
 
+    //判断上传文件是否是合法
     public static boolean isFileAllowed(String fileName) {
         for (String ext : IMAGE_FILE_EXTD) {
-            if (ext.equals(fileName)) {
+            if (ext.equals(fileName)) { //包含
                 return true;
             }
         }

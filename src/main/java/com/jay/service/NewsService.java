@@ -34,31 +34,35 @@ public class NewsService {
         return newsDAO.selectByUserIdAndOffset(userId, offset, limit);
     }
 
+    //插入新闻
     public int addNews(News news) {
         newsDAO.addNews(news);
         return news.getId();
     }
 
+    //根据id获取新闻
     public News getById(int newsId) {
         return newsDAO.getById(newsId);
     }
 
+    //上传图片
     public String saveImage(MultipartFile file) throws IOException {
-        int dotPos = file.getOriginalFilename().lastIndexOf(".");
-        if (dotPos < 0) {
+        int dotPos = file.getOriginalFilename().lastIndexOf("."); //包含路径的文件名
+        if (dotPos < 0) {  //不是合法的文件
             return null;
         }
-        String fileExt = file.getOriginalFilename().substring(dotPos + 1).toLowerCase();
-        if (!ToutiaoUtils.isFileAllowed(fileExt)) {
+        String fileExt = file.getOriginalFilename().substring(dotPos + 1).toLowerCase(); //获得扩展名
+        if (!ToutiaoUtils.isFileAllowed(fileExt)) { //判断后缀名是否符合要求
             return null;
         }
-
+        //生成文件名
         String fileName = UUID.randomUUID().toString().replaceAll("-", "") + "." + fileExt;
         Files.copy(file.getInputStream(), new File(ToutiaoUtils.IMAGE_DIR + fileName).toPath(),
-                StandardCopyOption.REPLACE_EXISTING);
-        return ToutiaoUtils.TOUTIAO_DOMAIN + "image?name=" + fileName;
+                StandardCopyOption.REPLACE_EXISTING);  //复制文件，文件存在则替换
+        return ToutiaoUtils.TOUTIAO_DOMAIN + "image?name=" + fileName; //返回文件url，以便后续访问
     }
 
+    //
     public int updateCommentCount(int id, int count) {
         return newsDAO.updateCommentCount(id, count);
     }
