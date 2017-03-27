@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
- *  用户登录状态检测拦截器
+ *  用户登录状态验证  检测拦截器
  */
 @Component
 public class PassportInterceptor implements HandlerInterceptor {

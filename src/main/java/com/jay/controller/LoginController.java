@@ -81,7 +81,7 @@ public class LoginController {
     @RequestMapping(value = {"/logout/"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(@CookieValue("ticket") String ticket){
         userService.logout(ticket);
-        return "redirect:/";  //返回到首页
+        return "redirect:/";  //登出返回到首页
     }
 
 }
