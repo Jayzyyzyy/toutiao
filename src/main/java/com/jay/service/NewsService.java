@@ -63,7 +63,7 @@ public class NewsService {
         return ToutiaoUtils.TOUTIAO_DOMAIN + "image?name=" + fileName; //返回文件url，以便后续访问
     }
 
-    //
+    //添加评论之后，更新news评论数
     public int updateCommentCount(int id, int count) {
         return newsDAO.updateCommentCount(id, count);
     }

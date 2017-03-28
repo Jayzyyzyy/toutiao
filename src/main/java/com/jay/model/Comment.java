@@ -2,12 +2,15 @@ package com.jay.model;
 
 import java.util.Date;
 
+/**
+ *  评论实体
+ */
 public class Comment {
     private int id;
-    private int userId;
-    private int entityId; //实体id
-    private int entityType; //实体类型
     private String content;
+    private int userId;
+    private int entityId;
+    private int entityType;
     private Date createdDate;
     private int status;
 
@@ -17,6 +20,14 @@ public class Comment {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getUserId() {
@@ -41,14 +52,6 @@ public class Comment {
 
     public void setEntityType(int entityType) {
         this.entityType = entityType;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public Date getCreatedDate() {

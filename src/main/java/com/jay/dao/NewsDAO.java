@@ -23,7 +23,7 @@ public interface NewsDAO {
     @Select({"select ", SELECT_FIELDS , " from ", TABLE_NAME, " where id=#{id}"})
     News getById(int id);
 
-    //更新新闻评论数
+    //添加评论之后，更新新闻评论数
     @Update({"update ", TABLE_NAME, " set comment_count = #{commentCount} where id=#{id}"})
     int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
 
@@ -31,6 +31,5 @@ public interface NewsDAO {
     List<News> selectByUserIdAndOffset(@Param("userId") int userId,
                                        @Param("offset") int offset,
                                        @Param("limit") int limit);
-
 
 }

@@ -33,10 +33,11 @@ public class InitDatabaseTests2 {
 	@Test
 	public void initData() {
 
-		LoginTicket loginTicket = loginTicketDAO.selectByUserId(15);
-		System.out.println(loginTicket.getTicket());
+		/*LoginTicket loginTicket = loginTicketDAO.selectByUserId(15);
+		System.out.println(loginTicket.getTicket());*/
 
-
+		News news = newsDAO.getById(1);
+		System.out.println(news);
 	}
 
 }

@@ -1,11 +1,11 @@
 package com.jay;
 
+import com.jay.dao.CommentDAO;
 import com.jay.dao.LoginTicketDAO;
 import com.jay.dao.NewsDAO;
 import com.jay.dao.UserDAO;
-import com.jay.model.LoginTicket;
-import com.jay.model.News;
-import com.jay.model.User;
+import com.jay.model.*;
+import com.jay.service.CommentService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)  //Spring测试环境
 @SpringApplicationConfiguration(classes = ToutiaoApplication.class)
-@Sql("/init-schema.sql")  /*在测试之前执行sql文件*/
+@Sql("/init-schema.sql")  /*在测试之前执行sql文件，清空数据库之前数据*/
 public class InitDatabaseTests {
 	@Autowired
 	UserDAO userDAO;
@@ -30,6 +30,9 @@ public class InitDatabaseTests {
 
 	@Autowired
 	LoginTicketDAO loginTicketDAO;
+
+	@Autowired
+	CommentDAO commentDAO;
 
 	@Test
 	public void initData() {
@@ -60,6 +63,20 @@ public class InitDatabaseTests {
 			news.setLink(String.format("http://www.nowcoder.com/%d.html", i));
 			newsDAO.addNews(news);
 
+			//每个资讯下面插入3条评论
+			for (int j = 0; j < 3; j++) {
+				Comment comment = new Comment();
+				comment.setUserId(i+1);
+				comment.setContent("这里是一条评论啊" + String.valueOf(j));
+				comment.setEntityId(news.getId());
+				comment.setEntityType(EntityType.ENTITY_NEWS);
+				comment.setStatus(0); //有效
+				comment.setCreatedDate(new Date());
+				commentDAO.addComment(comment);
+			}
+
+
+
 			LoginTicket ticket = new LoginTicket();
 			ticket.setStatus(0);
 			ticket.setUserId(i+1);
@@ -77,6 +94,8 @@ public class InitDatabaseTests {
 
 		Assert.assertEquals(1, loginTicketDAO.selectByTicket("TICKET1").getUserId());  //id
 		Assert.assertEquals(2, loginTicketDAO.selectByTicket("TICKET1").getStatus());  //status
+
+		Assert.assertNotNull(commentDAO.selectByEntity(1, EntityType.ENTITY_NEWS).get(0)); //新闻id为1的所有评论
 
 	}
 

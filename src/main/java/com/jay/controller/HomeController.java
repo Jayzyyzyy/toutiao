@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 首页控制器
  */
 @Controller
 public class HomeController {
