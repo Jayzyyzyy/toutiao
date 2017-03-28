@@ -6,7 +6,7 @@ import java.util.Date;
  *  评论实体
  */
 public class Comment {
-    private int id;
+    private int id;  //删除comment用
     private String content;
     private int userId;
     private int entityId;

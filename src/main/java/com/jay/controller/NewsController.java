@@ -50,8 +50,8 @@ public class NewsController {
     @RequestMapping(path = {"/addComment"}, method = {RequestMethod.POST})
     public String addComment(@RequestParam("content") String content,
                             @RequestParam("newsId") int newsId) {
-
         try {
+            //过滤content
             Comment comment = new Comment();
             comment.setCreatedDate(new Date());
             comment.setContent(content);
