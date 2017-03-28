@@ -17,7 +17,7 @@ public class ToutiaoUtils {
     public static String IMAGE_DIR = "D:/upload/";
     public static String[] IMAGE_FILE_EXTD = new String[] {"png", "bmp", "jpg", "jpeg"}; //扩展名
 
-    //判断上传文件是否是合法
+    //判断上传文件的扩展名是否是合法
     public static boolean isFileAllowed(String fileName) {
         for (String ext : IMAGE_FILE_EXTD) {
             if (ext.equals(fileName)) { //包含

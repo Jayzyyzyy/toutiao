@@ -48,15 +48,16 @@ public class NewsService {
     //上传图片
     public String saveImage(MultipartFile file) throws IOException {
         int dotPos = file.getOriginalFilename().lastIndexOf("."); //包含路径的文件名
-        if (dotPos < 0) {  //不是合法的文件
+        if (dotPos < 0) {  //不是合法的文件 -1
             return null;
         }
-        String fileExt = file.getOriginalFilename().substring(dotPos + 1).toLowerCase(); //获得扩展名
+        String fileExt = file.getOriginalFilename().substring(dotPos + 1).toLowerCase(); //获得全部小写的扩展名
         if (!ToutiaoUtils.isFileAllowed(fileExt)) { //判断后缀名是否符合要求
             return null;
         }
-        //生成文件名
+        //生成随机文件名
         String fileName = UUID.randomUUID().toString().replaceAll("-", "") + "." + fileExt;
+        //file.transferTo();
         Files.copy(file.getInputStream(), new File(ToutiaoUtils.IMAGE_DIR + fileName).toPath(),
                 StandardCopyOption.REPLACE_EXISTING);  //复制文件，文件存在则替换
         return ToutiaoUtils.TOUTIAO_DOMAIN + "image?name=" + fileName; //返回文件url，以便后续访问
