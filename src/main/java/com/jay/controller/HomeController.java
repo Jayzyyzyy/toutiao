@@ -2,8 +2,11 @@ package com.jay.controller;
 
 import com.jay.dao.NewsDAO;
 import com.jay.dao.UserDAO;
+import com.jay.model.EntityType;
+import com.jay.model.HostHolder;
 import com.jay.model.News;
 import com.jay.model.ViewObject;
+import com.jay.service.LikeService;
 import com.jay.service.NewsService;
 import com.jay.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +31,26 @@ public class HomeController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    HostHolder hostHolder;
+
+    @Autowired
+    LikeService likeService;
+
     private List<ViewObject> getNews(int userId, int offset, int limit){
         List<News> newsList = newsService.getLatestNews(userId, offset, limit);
+        int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0 ;
 
         List<ViewObject> vos = new ArrayList<ViewObject>();
         for (News news : newsList) {
             ViewObject vo = new ViewObject();
             vo.set("news", news);
             vo.set("user", userService.getUser(news.getUserId()));
+            if(localUserId != 0){ //得到用户的喜欢与不喜欢状态
+                vo.set("like", likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS,news.getId()));
+            }else {
+                vo.set("like", 0);
+            }
             vos.add(vo);
         }
         return vos;

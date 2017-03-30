@@ -1,10 +1,7 @@
 package com.jay.controller;
 
 import com.jay.model.*;
-import com.jay.service.CommentService;
-import com.jay.service.NewsService;
-import com.jay.service.QiniuService;
-import com.jay.service.UserService;
+import com.jay.service.*;
 import com.jay.util.ToutiaoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +44,9 @@ public class NewsController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    LikeService likeService;
+
     @RequestMapping(path = {"/addComment"}, method = {RequestMethod.POST})
     public String addComment(@RequestParam("content") String content,
                             @RequestParam("newsId") int newsId) {
@@ -83,6 +83,13 @@ public class NewsController {
             News news = newsService.getById(newsId);
             //新闻存在
             if(news != null){
+                int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0 ;
+                if(localUserId != 0){
+                    model.addAttribute("like", likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS,news.getId()));
+                }else {
+                    model.addAttribute("like", 0);
+                }
+                //评论
                 List<Comment> comments = commentService.getCommentsByEntity(news.getId(), EntityType.ENTITY_NEWS);
                 List<ViewObject> commentVOs = new ArrayList<ViewObject>();
                 for (Comment comment : comments) {
