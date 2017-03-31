@@ -1,5 +1,9 @@
 package com.jay.controller;
 
+import com.jay.async.EventModel;
+import com.jay.async.EventProducer;
+import com.jay.async.EventType;
+import com.jay.model.EntityType;
 import com.jay.service.UserService;
 import com.jay.util.ToutiaoUtils;
 import org.slf4j.Logger;
@@ -22,6 +26,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     //注册
     @RequestMapping(path = {"/reg/"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -67,6 +74,10 @@ public class LoginController {
                     cookie.setMaxAge(3600 * 24 * 5); // s单位，5天有效
                 }
                 response.addCookie(cookie);
+                //发送登录事件
+                eventProducer.fireEvent(new EventModel().setEventType(EventType.LOGIN).setActorId((int)map.get("userId")).
+                        setExt("username", "牛客").setExt("to", "714512544@qq.com"));
+
                 return ToutiaoUtils.getJsonString(0, "登录成功");
             }else {
                 return ToutiaoUtils.getJsonString(1, map);

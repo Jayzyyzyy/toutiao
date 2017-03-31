@@ -8,6 +8,16 @@ public class RedisKeyUtil {
     private static String BIZ_LIKE = "LIKE"; //业务 喜欢
     private static String BIZ_DISLIKE = "DISLIKE";  //业务 不喜欢
 
+    private static String BIZ_EVENT = "EVENT"; //事件名字
+
+    /**
+     * 获取事件队列的key
+     * @return
+     */
+    public static String getEventQueueKey(){
+        return BIZ_EVENT;
+    }
+
     /**
      * 获取某个实体的喜欢业务集合key
      * @param entityType

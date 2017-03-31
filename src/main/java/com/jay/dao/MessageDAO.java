@@ -29,7 +29,7 @@ public interface MessageDAO {
     //与用户相关的message(复杂的sql语句)
     @Select({"select ", INSERT_FIELDS , ", count(id) as id from " + //每个分组(会话)的个数作为id
             "( select * from ", TABLE_NAME, " where from_id=#{userId} or to_id=#{userId} order by id desc) tt " + //降序从表
-            " group by conversation_id order by id desc limit #{offset}, #{limit}"}) //按照时间顺序降序排列，分页
+            " group by conversation_id order by created_date desc limit #{offset}, #{limit}"}) //按照时间顺序降序排列，分页
     List<Message> getConversationList(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit);
 
     //获取未读的message数目

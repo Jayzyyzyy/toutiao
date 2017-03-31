@@ -87,6 +87,7 @@ public class UserService {
             return map;
         }
 
+        map.put("userId", user.getId());
         //登陆
         String ticket = addLoginTicket(user.getId());
         map.put("ticket",ticket);

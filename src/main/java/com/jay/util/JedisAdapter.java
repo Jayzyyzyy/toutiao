@@ -1,5 +1,6 @@
 package com.jay.util;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -9,6 +10,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Tuple;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -120,7 +122,132 @@ public class JedisAdapter implements InitializingBean{
         }
     }
 
-    public static void print(int i, Object obj){
+    /**
+     * 验证码，防机器注册，记录上次注册有时间
+     * @param key
+     * @param value
+     */
+    public void setex(String key, String value){
+        Jedis jedis = null;
+        try{
+            jedis = pool.getResource();
+            jedis.setex(key, 10, value); //设置value有效期
+        }catch (Exception e){
+            logger.error("发生异常: " + e.getMessage());
+        }finally {
+            if(jedis != null){ //还掉连接源
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * 设置K-V
+     * @param key 键值
+     * @param value value值
+     */
+    public void set(String key, String value){
+        Jedis jedis = null;
+        try{
+            jedis = pool.getResource();
+            jedis.set(key, value);
+        }catch (Exception e){
+            logger.error("发生异常: " + e.getMessage());
+        }finally {
+            if(jedis != null){ //还掉连接源
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * K-V
+     * @param key 键值
+     * @return value值
+     */
+    public String get(String key){
+        Jedis jedis = null;
+        try{
+            jedis = pool.getResource();
+            return jedis.get(key);
+        }catch (Exception e){
+            logger.error("发生异常: " + e.getMessage());
+            return null;
+        }finally {
+            if(jedis != null){ //还掉连接源
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * 左边push元素进入列表
+     * @param key 列表
+     * @param value 值
+     * @return 返回列表元素个数
+     */
+    public long lpush(String key, String value){
+        Jedis jedis = null;
+        try{
+            jedis = pool.getResource();
+            return jedis.lpush(key, value);
+        }catch (Exception e){
+            logger.error("发生异常: " + e.getMessage());
+            return 0;
+        }finally {
+            if(jedis != null){ //还掉连接源
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param timeout 阻塞时间
+     * @param key 列表
+     * @return List 含有两个元素，key(列表), value
+     */
+    public List<String> brpop(int timeout, String key){
+        Jedis jedis = null;
+        try{
+            jedis = pool.getResource();
+            return jedis.brpop(timeout, key);
+        }catch (Exception e){
+            logger.error("发生异常: " + e.getMessage());
+            return null;
+        }finally {
+            if(jedis != null){ //还掉连接源
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     *  KV 设置
+     * @param key 键
+     * @param object 对象
+     */
+    public void setObject(String key, Object object){
+        set(key, JSON.toJSONString(object));  //JSON.toJSONString()
+    }
+
+    /**
+     * 解析json字符串对象(泛型方法)
+     * @param key 键
+     * @param clazz Class对象
+     * @param <T> 泛型
+     * @return 对象
+     */
+    public <T> T getObject(String key, Class<T> clazz){
+        String value = get(key); //对象json字符串
+        if(value != null){
+            return JSON.parseObject(value, clazz); //T类型
+        }
+        return null;
+    }
+
+
+    private static void print(int i, Object obj){
         System.out.println(String.format("%d,%s", i, obj.toString()));
     }
 

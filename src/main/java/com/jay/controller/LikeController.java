@@ -1,5 +1,8 @@
 package com.jay.controller;
 
+import com.jay.async.EventModel;
+import com.jay.async.EventProducer;
+import com.jay.async.EventType;
 import com.jay.model.EntityType;
 import com.jay.model.HostHolder;
 import com.jay.service.LikeService;
@@ -26,6 +29,9 @@ public class LikeController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    EventProducer eventProducer;
+
     @RequestMapping(value = {"/like"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String like(@RequestParam("newsId") int newsId){
@@ -33,6 +39,13 @@ public class LikeController {
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_NEWS, newsId);
         //更新数据库news likeCount数目
         newsService.updateLikeCount(newsId, (int)likeCount);
+
+        //发送点赞事件
+        eventProducer.fireEvent(new EventModel().setEventType(EventType.LIKE).
+                setActorId(hostHolder.getUser().getId()).
+                setEntityOwnerId(newsService.getById(newsId).getUserId()).
+                setEntityType(EntityType.ENTITY_NEWS).setEntityId(newsId));
+
         return ToutiaoUtils.getJsonString(0, String.valueOf(likeCount));
     }
 
