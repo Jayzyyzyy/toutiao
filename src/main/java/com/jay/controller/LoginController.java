@@ -76,7 +76,7 @@ public class LoginController {
                 response.addCookie(cookie);
                 //发送登录事件
                 eventProducer.fireEvent(new EventModel().setEventType(EventType.LOGIN).setActorId((int)map.get("userId")).
-                        setExt("username", "牛客").setExt("to", "714512544@qq.com"));
+                        setExt("username", "Jayzyyzyy").setExt("to", "714512544@qq.com")); //附带参数添加
 
                 return ToutiaoUtils.getJsonString(0, "登录成功");
             }else {
