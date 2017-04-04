@@ -251,7 +251,7 @@ public class JedisAdapter implements InitializingBean{
         System.out.println(String.format("%d,%s", i, obj.toString()));
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Jedis jedis = new Jedis();
         jedis.flushAll(); //清空所有数据
 
@@ -360,5 +360,5 @@ public class JedisAdapter implements InitializingBean{
             j.close();  //关掉连接
         }
 
-    }
+    }*/
 }
