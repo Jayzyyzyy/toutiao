@@ -30,7 +30,7 @@ public class LikeController {
     NewsService newsService;
 
     @Autowired
-    EventProducer eventProducer;
+    EventProducer eventProducer; //事件产生者
 
     @RequestMapping(value = {"/like"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody

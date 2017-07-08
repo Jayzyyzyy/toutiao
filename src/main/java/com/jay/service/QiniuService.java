@@ -22,6 +22,7 @@ import java.util.UUID;
 @Service
 public class QiniuService {
     private static final Logger logger = LoggerFactory.getLogger(QiniuService.class);
+    private static String QINIU_IMAGE_DOMAIN = "http://onh97xzo0.bkt.clouddn.com/"; //图片访问域名
 
     //设置好账号的ACCESS_KEY和SECRET_KEY
     String ACCESS_KEY = "wxwVp2-SjeaOSYAZvOM5mywg_TwmpZ99YRq4OSER";
@@ -35,7 +36,6 @@ public class QiniuService {
     Configuration cfg = new Configuration(Zone.zone0());
     UploadManager uploadManager = new UploadManager(cfg);
 
-    private static String QINIU_IMAGE_DOMAIN = "http://onh97xzo0.bkt.clouddn.com/"; //图片访问域名
 
     //简单上传，使用默认策略，只需要设置上传的空间名就可以了。上传凭证
     public String getUpToken() {

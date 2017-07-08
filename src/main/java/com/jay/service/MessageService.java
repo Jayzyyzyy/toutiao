@@ -16,7 +16,7 @@ public class MessageService {
     @Autowired
     MessageDAO messageDAO;
 
-    //添加新闻
+    //添加消息
     public int addMessage(Message message){
         return messageDAO.addMessage(message);
     }

@@ -23,7 +23,7 @@ public class JedisAdapter implements InitializingBean{
     private JedisPool pool = null;
 
     /**
-     * 初始化pool
+     * 初始化pool, 在实现InitializingBean接口的bean属性设置之后，调用该方法
      * @throws Exception
      */
     @Override
@@ -105,7 +105,7 @@ public class JedisAdapter implements InitializingBean{
     /**
      *  返回集合中元素的个数
      * @param key 集合
-     * @return 个数
+     * @return 个数 long
      */
     public long scard(String key){
         Jedis jedis = null;
@@ -202,7 +202,6 @@ public class JedisAdapter implements InitializingBean{
     }
 
     /**
-     *
      * @param timeout 阻塞时间
      * @param key 列表
      * @return List 含有两个元素，key(列表), value

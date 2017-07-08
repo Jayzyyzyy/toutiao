@@ -35,7 +35,6 @@ public class LikeHandler implements EventHandler{
         message.setToId(toId); //新闻发布用户
         message.setCreatedDate(new Date());
         message.setContent("用户" + user.getName() + "赞了您的资讯,http://127.0.0.1/news/"+String.valueOf(model.getEntityId()));
-        message.setConversationId("");
         message.setConversationId(13 < toId ? String.format("%s_%s", 13, toId) :  //小的id放在前面
                 String.format("%s_%s", toId, 13));
         messageService.addMessage(message);

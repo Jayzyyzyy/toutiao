@@ -14,15 +14,19 @@ public interface CommentDAO {
     String INSERT_FIELDS = " content, user_id, entity_id, entity_type, created_date, status ";
     String SELECT_FIELDS = " id,  " + INSERT_FIELDS;
 
-    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values( #{content}, #{userId}, #{entityId}, #{entityType}, #{createdDate}, " +
+    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values( #{content}, #{userId}," +
+            " #{entityId}, #{entityType}, #{createdDate}, " +
             "#{status})"})
     int addComment(Comment comment);
 
-    @Update({"update ", TABLE_NAME, " set status = #{status} where entity_id=#{entityId} and entity_type=#{entityType} and id=#{id}"})
-    void updateStatus(@Param("entityId") int entityId, @Param("entityType") int entityType, @Param("status") int status, @Param("id") int id);
+    @Update({"update ", TABLE_NAME, " set status = #{status} " +
+            "where entity_id=#{entityId} and entity_type=#{entityType} and id=#{id}"})
+    void updateStatus(@Param("entityId") int entityId, @Param("entityType")
+            int entityType, @Param("status") int status, @Param("id") int id);
 
     //得到某种类型（例如某个新闻）的评论列表
-    @Select({"select ", SELECT_FIELDS , " from ", TABLE_NAME, " where entity_id=#{entityId} and entity_type=#{entityType} order by id desc "})
+    @Select({"select ", SELECT_FIELDS , " from ", TABLE_NAME,
+            " where entity_id=#{entityId} and entity_type=#{entityType} order by id desc "})
     List<Comment> selectByEntity(@Param("entityId") int entityId, @Param("entityType") int entityType);
 
     //得到某种类型（例如某个新闻）的评论数目

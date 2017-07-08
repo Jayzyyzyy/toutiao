@@ -1,7 +1,5 @@
 package com.jay.controller;
 
-import com.jay.dao.NewsDAO;
-import com.jay.dao.UserDAO;
 import com.jay.model.EntityType;
 import com.jay.model.HostHolder;
 import com.jay.model.News;
@@ -45,7 +43,7 @@ public class HomeController {
         for (News news : newsList) {
             ViewObject vo = new ViewObject();
             vo.set("news", news);
-            vo.set("user", userService.getUser(news.getUserId()));
+            vo.set("user", userService.getUser(news.getUserId())); //获取用户信息
             if(localUserId != 0){ //得到用户的喜欢与不喜欢状态
                 vo.set("like", likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS,news.getId()));
             }else {
@@ -56,6 +54,7 @@ public class HomeController {
         return vos;
     }
 
+    //访问首页，看到资讯
     @RequestMapping(value = {"/","/index"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String index(Model model, @RequestParam(value = "pop",defaultValue = "0") int pop){
         model.addAttribute("vos",getNews(0, 0 ,10));
@@ -63,6 +62,7 @@ public class HomeController {
         return "home";
     }
 
+    //访问用户，看到资讯（与用户相关）
     @RequestMapping(value = {"/user/{userId}"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String userIndex(Model model, @PathVariable("userId") int userId){
         model.addAttribute("vos",getNews(userId, 0 ,10));

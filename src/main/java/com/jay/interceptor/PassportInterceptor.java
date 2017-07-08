@@ -43,7 +43,7 @@ public class PassportInterceptor implements HandlerInterceptor {
 
         if(ticket != null){
             LoginTicket loginTicket = loginTicketDAO.selectByTicket(ticket); //存在ticket，在数据库中查找是否存在该对象
-            if(loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() != 0){ //还用户登录信息已失效
+            if(loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() != 0){ //用户登录信息已失效
                 return true;
             }
             //该用户已经登陆且有效,将用户信息放到上下文中
@@ -58,12 +58,12 @@ public class PassportInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         if(modelAndView != null && hostHolder.getUser() != null){
-            modelAndView.addObject("user", hostHolder.getUser()); //user模板渲染用
+            modelAndView.addObject("user", hostHolder.getUser()); //MV加入user，模板渲染用
         }
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        hostHolder.clear(); //视图渲染之后执行
+        hostHolder.clear(); //视图渲染之后执行，清空用户登录状态
     }
 }

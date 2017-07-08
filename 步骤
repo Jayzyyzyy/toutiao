@@ -1,0 +1,43 @@
+1. MyBatis集成，Mapper配置，CRUD操作 UserDAO UserService
+2. NewsDAO
+3. 首页展现 HomeController
+   ViewObject home.html header.html footer.html
+   DateTool
+4. 用户注册 LoginController UserService UserDAO ToutiaoUtils
+5. 登录 token下发 LoginTicket  LoginTicketDAO
+6. 页面游览 先进入拦截器，检测是否登陆用户，是否有权限游览页面（PassportInterceptor HostHolder）
+   ToutiaoWebConfiguration 注册拦截器
+
+   访问某些页面需要权限 LoginRequiredInterceptor
+
+7. 图片上传
+    public String uploadImage(@RequestParam("file") MultipartFile file)
+    图片访问 StreamUtils.copy()
+
+    集成云服务的好处：把图片放到单独的云服务器(缓存优化等)，本地服务器只发布动态内容，减轻压力  QiniuService
+
+    实时缩图: 灵活，降低冗余，统一管理。减少带宽下载，节省成本，访问更快，应对需求变化，不占用服务器空间。
+
+8. 资讯发布
+    NewsController NewsService NewsDAO
+
+9. 资讯详情页
+  NewsController.addNews()  NewsService detail.html
+
+10. 评论中心————统一的评论服务，覆盖所有的实体评论，面向接口编程，通用化
+    1）Comment bean
+    2）NewsController detail() CommentDAO CommentService
+    3) detail.html
+
+11. Message站内信
+    1) Message
+    2) MessageController MessageService MessageDAO
+    3）letter.html
+
+
+12. 资讯赞踩功能
+    1） Redis 用户点赞，将用户的id放到redis set集合中，更新集合，再更新mysql，刷新页面
+    likeService JedisAdapter RedisKeyUtil
+
+13. 异步队列（服务化）
+    可以通过滞后更新的数据，可以慢慢更新

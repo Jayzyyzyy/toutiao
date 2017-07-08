@@ -43,7 +43,7 @@ public class EventConsumer implements InitializingBean , ApplicationContextAware
                     if(!config.containsKey(eventType)){
                         config.put(eventType, new ArrayList<EventHandler>());
                     }
-                    //注册每个时间的处理函数
+                    //注册每个时间的处理函数handler
                     config.get(eventType).add(entry.getValue());
                 }
             }
@@ -53,9 +53,10 @@ public class EventConsumer implements InitializingBean , ApplicationContextAware
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                //从队列一直消费
+                //从队列(双向列表)一直消费
                 while(true){
                     String key = RedisKeyUtil.getEventQueueKey();
+                    //返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，第二个元素是被弹出元素的值。
                     List<String> messages = jedisAdapter.brpop(0, key);  //从队列中取出model，没有就一直等待，线程阻塞(监听)
 
                     for (String message : messages) {
@@ -65,7 +66,7 @@ public class EventConsumer implements InitializingBean , ApplicationContextAware
                         }
 
                         EventModel model = JSON.parseObject(message, EventModel.class);
-                        //找到这个时间爱你的处理handler列表
+                        //找到这个事件的处理handler列表
                         if(!config.containsKey(model.getEventType())){
                             logger.error("不能识别的事件");
                             continue;

@@ -1,13 +1,13 @@
 package com.jay.async;
 
 /**
- *  事件类型枚举类
+ *  EventType事件类型枚举类
  */
 public enum EventType {
     LIKE(0), COMMENT(1), LOGIN(2), MAIL(3);
 
     private int value;
-    private EventType(int value){  //构造器私有化
+    EventType(int value){  //构造器私有化
         this.value = value;
     }
 

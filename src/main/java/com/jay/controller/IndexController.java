@@ -129,7 +129,7 @@ public class IndexController {
     }
 
     @ExceptionHandler()
-    @ResponseBody
+    @ResponseBody  /*自定义异常处理*/
     public String error(Exception e){
         return "error: " + e.getMessage();
     }

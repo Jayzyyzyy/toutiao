@@ -18,7 +18,7 @@
     ${value3}   ##${var}：如果有值则输出，如果为空，则将该代码原样输出；
 
     #foreach($color in $colors)
-        Color $!{foreach.index}:$!{foreach.count}: $!{color}
+        Color $!{foreach.index}:$!{foreach.count}: $!{color} #* index从0开始， count从1开始  *#
     #end
 
     #foreach($key in $map.keySet())
@@ -36,17 +36,17 @@
     Include: #include("header.vm")  <br />
     Parse: #parse("header.vm")
 
-    #macro(render_color,$color,$index)
+    #macro(render_color,$color,$index) #*定义函数，函数名，参数1，参数2*#
         Color by Macro $index, $color.
     #end
 
     #foreach($color in $colors)
-        #render_color($color, $foreach.index)
+        #render_color($color, $foreach.index) #*调用函数*#
     #end
 
     #set($hello = "hello")
     #set($hworld1 = "$!{hello} world1")
-    #set($hworld2 = "$!{hello} world2")
+    #set($hworld2 = '$!{hello} world2') #*双引号里的才会被Velocity解析*#
 
     hworld1:$hworld1
     hworld2:$hworld2

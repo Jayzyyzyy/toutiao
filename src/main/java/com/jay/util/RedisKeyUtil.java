@@ -5,8 +5,8 @@ package com.jay.util;
  */
 public class RedisKeyUtil {
     private static String SPLIT = ":"; //分隔符
-    private static String BIZ_LIKE = "LIKE"; //业务 喜欢
-    private static String BIZ_DISLIKE = "DISLIKE";  //业务 不喜欢
+    private static String BIZ_LIKE = "LIKE"; //业务————喜欢
+    private static String BIZ_DISLIKE = "DISLIKE";  //业务————不喜欢
 
     private static String BIZ_EVENT = "EVENT"; //事件名字
 

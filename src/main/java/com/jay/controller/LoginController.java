@@ -40,7 +40,7 @@ public class LoginController {
         try{
             Map<String, Object> map = userService.register(username, password);
 
-            if(map.containsKey("ticket")){
+            if(map.containsKey("ticket")){ //包含ticket，注册成功；否则，注册失败
                 Cookie cookie = new Cookie("ticket",map.get("ticket").toString());
                 cookie.setPath("/");//设置全站有效
                 if(rememberme > 0) {
@@ -79,11 +79,11 @@ public class LoginController {
                         setExt("username", "Jayzyyzyy").setExt("to", "714512544@qq.com")); //附带参数添加
 
                 return ToutiaoUtils.getJsonString(0, "登录成功");
-            }else {
-                return ToutiaoUtils.getJsonString(1, map);
-            }
-        }catch (Exception e){
-            logger.error("登陆异常: "+e.getMessage());
+        }else {
+            return ToutiaoUtils.getJsonString(1, map);
+        }
+    }catch (Exception e){
+        logger.error("登陆异常: "+e.getMessage());
             return ToutiaoUtils.getJsonString(1, "登录异常");
         }
     }

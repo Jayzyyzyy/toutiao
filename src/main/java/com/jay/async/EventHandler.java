@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface EventHandler {
     void doHandle(EventModel model); //处理事件
-    List<EventType> getSupportEventTypes();  //该处理器可以处理的事件model类型
+    List<EventType> getSupportEventTypes();  //该处理器可以处理的事件model类型EventType
 }

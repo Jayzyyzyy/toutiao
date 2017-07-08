@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.View;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,7 +35,6 @@ public class NewsController {
 
     @Autowired
     HostHolder hostHolder;
-
 
     @Autowired
     UserService userService;
@@ -97,8 +95,8 @@ public class NewsController {
                         continue;
                     }
                     ViewObject viewObject  =new ViewObject();
-                    viewObject.set("comment", comment); //用户
-                    viewObject.set("user", userService.getUser(comment.getUserId())); //评论
+                    viewObject.set("comment", comment); //评论
+                    viewObject.set("user", userService.getUser(comment.getUserId())); //用户
                     commentVOs.add(viewObject);
                 }
                 model.addAttribute("comments", commentVOs);
@@ -169,7 +167,7 @@ public class NewsController {
      */
     @RequestMapping(path = {"/uploadImage/"}, method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public String uploadImage(@RequestParam("file")MultipartFile file){
+    public String uploadImage(@RequestParam("file") MultipartFile file){
         try {
 //            String fileUrl = newsService.saveImage(file);
             String fileUrl = qiniuService.saveImage(file);

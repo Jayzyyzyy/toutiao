@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class HostHolder {
-    private static ThreadLocal<User> users = new ThreadLocal<User>();
+    private static ThreadLocal<User> users = new ThreadLocal<User>(); //线程本地变量
 
     public void set(User user){
         users.set(user);

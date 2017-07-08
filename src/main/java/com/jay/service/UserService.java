@@ -31,6 +31,7 @@ public class UserService {
         return userDAO.selectById(id);
     }
 
+    //注册，返回错误信息
     public Map<String,Object> register(String username, String password){
         Map<String,Object> map = new HashMap<String, Object>();
         if(StringUtils.isBlank(username)){  //StringUtils工具类
@@ -88,10 +89,10 @@ public class UserService {
         }
 
         map.put("userId", user.getId());
-        //登陆
+        //登陆成功
         String ticket = addLoginTicket(user.getId());
         map.put("ticket",ticket);
-        return map;
+        return map; //返回前端
     }
 
     //添加ticket到数据库
@@ -119,7 +120,7 @@ public class UserService {
 
     //用户登出
     public void logout(String ticket){
-        loginTicketDAO.updateStatus(ticket, 2);
+        loginTicketDAO.updateStatus(ticket, 2); //ticket status=2
     }
 
 }

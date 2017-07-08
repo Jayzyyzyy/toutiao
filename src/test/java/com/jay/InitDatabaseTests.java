@@ -49,7 +49,9 @@ public class InitDatabaseTests {
 			userDAO.addUser(user);  //增
 
 			user.setPassword("newpassword");
-			userDAO.updatePassword(user);  //改，如果主键已有，会抛出异常
+			userDAO.updatePassword(user);  //改
+
+			/*------------------------------------------------------*/
 
 			News news = new News();
 			news.setCommentCount(i);
@@ -63,6 +65,8 @@ public class InitDatabaseTests {
 			news.setLink(String.format("http://www.nowcoder.com/%d.html", i));
 			newsDAO.addNews(news);
 
+			/*--------------------------------------------------------*/
+
 			//每个资讯下面插入3条评论
 			for (int j = 0; j < 3; j++) {
 				Comment comment = new Comment();
@@ -75,8 +79,8 @@ public class InitDatabaseTests {
 				commentDAO.addComment(comment);
 			}
 
-
-
+			/*--------------------------------------------------------*/
+			//ticket
 			LoginTicket ticket = new LoginTicket();
 			ticket.setStatus(0);
 			ticket.setUserId(i+1);
@@ -87,8 +91,8 @@ public class InitDatabaseTests {
 			loginTicketDAO.updateStatus(ticket.getTicket(), 2);
 
 		}
-		Assert.assertEquals("newpassword", userDAO.selectById(1).getPassword());  //查
 
+		Assert.assertEquals("newpassword", userDAO.selectById(1).getPassword());  //查
 		userDAO.deleteById(1);  //删
 		Assert.assertNull(userDAO.selectById(1));  //判断是否为空
 
