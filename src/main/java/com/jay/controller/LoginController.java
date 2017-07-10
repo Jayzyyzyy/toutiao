@@ -53,7 +53,7 @@ public class LoginController {
             }
         }catch (Exception e){
             logger.error("注册异常: "+e.getMessage());
-            return ToutiaoUtils.getJsonString(1, "注册异常");
+            return ToutiaoUtils.getJsonString(1, "注册异常"); //系统异常
         }
     }
 
@@ -62,7 +62,8 @@ public class LoginController {
     @ResponseBody
     public String login(Model model, @RequestParam("username") String username,
                       @RequestParam("password") String password,
-                      @RequestParam(value = "rember",defaultValue = "0") int rememberme, //rememberme表示是否记住用户名/密码，默认不记住，游览器关闭失效
+                        //rememberme表示是否记住用户名/密码，默认不记住，游览器关闭失效
+                      @RequestParam(value = "rember",defaultValue = "0") int rememberme,
                       HttpServletResponse response){
         try{
             Map<String, Object> map = userService.login(username, password);
