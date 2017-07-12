@@ -144,7 +144,7 @@ public class NewsController {
     }
 
     /**
-     * 图片访问
+     * 图片访问(下载)
      * @param imageName
      * @param response
      */
