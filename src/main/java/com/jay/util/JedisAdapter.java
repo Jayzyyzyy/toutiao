@@ -251,13 +251,13 @@ public class JedisAdapter implements InitializingBean{
     }
 
     /*public static void main(String[] args) {
-        Jedis jedis = new Jedis();
+        Jedis jedis = new Jedis();  //句柄
         jedis.flushAll(); //清空所有数据
 
         //Map<String, String>  map = new HashMap<>();
         jedis.set("hello", "world");
         print(1, jedis.get("hello"));
-        jedis.rename("hello", "newhello");
+        jedis.rename("hello", "newhello"); //重命名key
         print(1, jedis.get("newhello"));
         jedis.setex("hello2", 15 ,"world"); //设置15s过期时间
 
@@ -295,7 +295,7 @@ public class JedisAdapter implements InitializingBean{
         print(16, jedis.hvals(userKey)); //获取所有的val
         print(17, jedis.hexists(userKey, "email")); //不存在false
         print(18, jedis.hexists(userKey, "age")); //存在 true
-        jedis.hsetnx(userKey,"school", "zju"); //如果不存在该字段，则设置字段
+        jedis.hsetnx(userKey,"school", "zju"); //如果不存在该字段，则设置字段 not exist
         jedis.hsetnx(userKey,"name", "yxy");//如果不存在该字段，则设置字段
         print(19, jedis.hgetAll(userKey));
 

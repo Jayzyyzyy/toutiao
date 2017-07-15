@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * messageDAO
+ * messageDAOcc
  */
 @Mapper
 public interface MessageDAO {
@@ -17,16 +17,16 @@ public interface MessageDAO {
     String INSERT_FIELDS = " from_id, to_id, content, created_date, has_read, conversation_id ";
     String SELECT_FIELDS = " id,  " + INSERT_FIELDS;
 
-    //添加新闻
+    //添加message
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS, ") values( #{fromId}, #{toId}, #{content}, #{createdDate}, #{hasRead}, #{conversationId})"})
     int addMessage(Message message);
 
-    //某个会话的message
+    //某个会话的message 对应letterDetail.html
     @Select({"select ", SELECT_FIELDS , " from ", TABLE_NAME, " where conversation_id=#{conversationId}" +
             " order by id desc limit #{offset}, #{limit}"}) //按照时间顺序降序排列
     List<Message> getConversationDetail(@Param("conversationId") String conversationId, @Param("offset") int offset, @Param("limit") int limit);
 
-    //与用户相关的message(复杂的sql语句)
+    //与用户相关的message会话(复杂的sql语句) 对应letter.html
     @Select({"select ", INSERT_FIELDS , ", count(id) as id from " + //每个分组(会话)的个数作为id
             "( select * from ", TABLE_NAME, " where from_id=#{userId} or to_id=#{userId} order by id desc) tt " + //降序从表
             " group by conversation_id order by created_date desc limit #{offset}, #{limit}"}) //按照时间顺序降序排列，分页

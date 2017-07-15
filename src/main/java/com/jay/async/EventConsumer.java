@@ -23,6 +23,7 @@ import java.util.Map;
 @Service
 public class EventConsumer implements InitializingBean , ApplicationContextAware {
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
+
     private ApplicationContext applicationContext; //初始化consumer的时候调用setApplication()方法注入
 
     Map<EventType, List<EventHandler>> config = new HashMap<EventType, List<EventHandler>>();  //对于每种事件类型，都有哪些handler需要处理
@@ -43,7 +44,7 @@ public class EventConsumer implements InitializingBean , ApplicationContextAware
                     if(!config.containsKey(eventType)){
                         config.put(eventType, new ArrayList<EventHandler>());
                     }
-                    //注册每个时间的处理函数handler
+                    //注册每个事件的处理函数handler
                     config.get(eventType).add(entry.getValue());
                 }
             }
