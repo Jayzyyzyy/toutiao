@@ -27,7 +27,7 @@ public class EventProducer {
         try {
             String key = RedisKeyUtil.getEventQueueKey();
             String json = JSON.toJSONString(model); //序列化
-            jedisAdapter.lpush(key, json);  //入列表
+            jedisAdapter.lpush(key, json);  //入双向列表
             return true;
         } catch (Exception e) {
             logger.error("发送事件失败: " + e.getMessage());

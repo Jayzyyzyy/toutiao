@@ -38,7 +38,7 @@ public class EventConsumer implements InitializingBean , ApplicationContextAware
 
         if(beans != null){
             for(Map.Entry<String, EventHandler> entry : beans.entrySet()){
-                List<EventType> eventTypes = entry.getValue().getSupportEventTypes(); //每个handler能够处理那些事件类型
+                List<EventType> eventTypes = entry.getValue().getSupportEventTypes(); //每个handler能够处理哪些事件类型
                 for (EventType eventType : eventTypes) {
                     //刚开始不含任何键
                     if(!config.containsKey(eventType)){
