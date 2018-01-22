@@ -6,7 +6,6 @@ import com.jay.dao.UserDAO;
 import com.jay.model.News;
 import com.jay.model.User;
 import com.jay.util.JedisAdapter;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
